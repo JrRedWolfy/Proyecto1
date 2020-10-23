@@ -1,13 +1,12 @@
-Algoritmo Agenda05
-	Definir datos, nombre, bnom, telef Como Caracter;
-	Definir i , ne, asig, total, basi, btel, tam Como Entero;
-	ne = 0;
-	tam = 20;
-	Dimension datos[tam];
+Algoritmo Agenda
 	
-	Para i=0 Hasta tam-1 Con Paso 1 Hacer
-		datos[i]= '';
-	Fin Para
+	Definir nombre, bnom Como Caracter;
+	Definir telef, i , ne, asig, total, basi, btel Como Entero;
+	ne = 0;
+	Dimension nombre[100];
+	Dimension telef[100];
+	
+	
 	
 	
 	Repetir
@@ -21,58 +20,30 @@ Algoritmo Agenda05
 		Segun i Hacer
 			1:
 				Escribir "Introduce el nombre del empleado";
-				Leer nombre;
+				Leer nombre[ne];
 				Escribir "Y su telefono es: ";
-				Leer telef;
-				
-				datos[ne]= nombre + ';' + telef;
+				Leer telef[ne];
 				
 				ne = ne + 1;
 			2:
 				Escribir "Escriba el numero de asignacion de el empleado que quieras editar.(Si no lo sabe, puede verlo en Mostrar Lista, escriba 0)";
-				Leer asig;
-				
-				Para i=0 Hasta Longitud(datos[asig-1]) Con Paso 1 Hacer
-					
-					Si Subcadena(datos[asig-1],i,i) == ';' Entonces
-						nombre = Subcadena(datos[asig-1],0,i-1);
-						telef = Subcadena(datos[asig-1],i+1,longitud(datos[asig-1]));
-					Fin Si
-					
-					
-				Fin Para
-				
-				
-				
-				Escribir "Sus datos actuales son:";
-				Escribir "Nombre: " nombre;
-				Escribir "Telefono: " telef;
-				Escribir "";
-				Escribir "Nombre Tras Editar: ";
-				Leer nombre;
-				Escribir "Telefono Tras Editar: ";
-				Leer telef;
-				
-				datos[asig-1]= nombre + ';' + telef;
+				Si asig <> 0 Entonces
+					Leer asig;
+					Escribir "Sus datos actuales son:";
+					Escribir "Nombre: " nombre[asig-1];
+					Escribir "Telefono: " telef[asig-1];
+					Escribir "";
+					Escribir "Nombre Tras Editar: ";
+					Leer nombre[asig-1];
+					Escribir "Telefono Tras Editar: ";
+					Leer telef[asig-1];
+				Fin Si
 				
 				
 			3:
 				Escribir "--------------------LISTA DE EMPLEADOS---------------------";
-				
 				Para total=0 Hasta ne-1 Con Paso 1 Hacer
-					
-					Para i=0 Hasta Longitud(datos[total]) Con Paso 1 Hacer
-						
-						Si Subcadena(datos[total],i,i) == ';' Entonces
-							nombre = Subcadena(datos[total],0,i-1);
-							telef = Subcadena(datos[total],i+1,longitud(datos[total]));
-						Fin Si
-						
-						
-					Fin Para
-					
-					
-					Escribir "NºAsignado: " total+1 "           Nombre: " nombre "            Telefono: " telef;
+					Escribir "NºAsignado: " total+1 "           Nombre: " nombre[total] "            Telefono: " telef[total];
 					Escribir "";
 				Fin Para
 				
@@ -81,11 +52,28 @@ Algoritmo Agenda05
 				Leer i;
 				
 				ne = ne - 1;
-				Escribir "El empleado: " datos[i-1] " ha sido borrado de la lista.";
-				datos[i-1]=datos[ne];
+				Escribir "El empleado: " nombre[i-1] " ha sido borrado de la lista.";
+				nombre[i-1]=nombre[ne];
+				telef[i-1]= telef[ne];
 				
-				datos[ne]= '';
-				nombre " y su telefono es el: " telef;
+				nombre[ne]= '';
+				telef[ne]= 0;
+				
+			5:
+				Escribir "----¿Por que dato desea buscar al Empleado?----";
+				Escribir "-[1]Nombre -----[2]Telefono-----[3]NºAsignado -";
+				Leer i;
+				
+				Segun i Hacer
+					1:
+						Escribir "Introduzca el nombre del empleado:";
+						Leer bnom;
+						
+						Para i = 0 Hasta ne-1 Con Paso 1 Hacer
+							Si bnom == nombre[i] Entonces
+								Escribir "El nombre del empleado que buscas es: " nombre[i] " y su telefono es el: " telef[i];
+							Fin Si
+						Fin Para
 						
 					2:
 						Escribir "Introduzca el Telefono del empleado:";
@@ -100,7 +88,7 @@ Algoritmo Agenda05
 					3:
 						Escribir "Introduzca el NºAsignado del empleado:";
 						Leer basi;
-						Si basi < ne Entonces
+						Si basi > ne Entonces
 							Escribir "No existe ningun empleado con dicha asignacion";
 						SiNo
 							Escribir "El nombre del empleado que buscas es: " nombre[basi-1] " y su telefono es el: " telef[basi-1];
@@ -119,4 +107,5 @@ Algoritmo Agenda05
 		Fin Segun
 		
 	Hasta Que i == 0
+	
 FinAlgoritmo
